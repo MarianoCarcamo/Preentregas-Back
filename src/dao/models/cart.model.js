@@ -1,14 +1,22 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 
-//Crea la coleccion con el nombre 
-const cartCollection = "carts"
+//Crea la coleccion con el nombre
+const cartCollection = 'carts'
 
 //Declara el esquema
 const cartSchema = new mongoose.Schema({
-    "products": [{
-        "product": String,
-        "quantity": Number
-    }]
+    products: {
+        type: [
+            {
+                product: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'products',
+                },
+                quantity: Number,
+            },
+        ],
+        default: [],
+    },
 })
 
 const cartModel = mongoose.model(cartCollection, cartSchema)

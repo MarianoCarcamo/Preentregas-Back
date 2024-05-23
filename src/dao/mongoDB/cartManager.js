@@ -6,7 +6,6 @@ const cartNotFound = new Error('Carrito no encontrado')
 const productManager = new ProductManager()
 
 class CartManager {
-
     async addCart() {
         try {
             await cartModel.create({})
@@ -17,11 +16,13 @@ class CartManager {
 
     async getCartById(cartId) {
         try {
-            const cart = await cartModel.findById({_id:cartId})
-            if(!cart){
+            const cart = await cartModel
+                .findById({ _id: cartId })
+                .populate('products.product')
+            if (!cart) {
                 throw cartNotFound
             }
-            return  cart
+            return cart
         } catch (error) {
             throw error
         }
@@ -41,7 +42,7 @@ class CartManager {
             await productManager.getProductById(prodId) //Verifico la existencia del producto
             const cart = await this.getCartById(cartId)
             const prod_index = cart.products.findIndex(
-                (element) => element.product === prodId
+                (element) => element.product._id.toString() === prodId
             )
             if (prod_index > -1) {
                 cart.products[prod_index].quantity++
@@ -49,9 +50,9 @@ class CartManager {
                 cart.products.push({
                     product: prodId,
                     quantity: 1,
-                })  
+                })
             }
-            await cartModel.updateOne({_id:cartId},cart)
+            await cartModel.updateOne({ _id: cartId }, cart)
         } catch (error) {
             throw error
         }
