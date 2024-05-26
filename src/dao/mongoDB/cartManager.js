@@ -2,6 +2,9 @@ import ProductManager from './productManager.js'
 import cartModel from '../models/cart.model.js'
 
 const cartNotFound = new Error('Carrito no encontrado')
+const productNotFoundInCart = new Error(
+    'El producto no se encuentra en el carrito'
+)
 
 const productManager = new ProductManager()
 
@@ -37,6 +40,19 @@ class CartManager {
         }
     }
 
+    async getProductInCart(cartId, prodId) {
+        try {
+            const cart = await this.getCartById(cartId)
+            const product = cart.products.find(
+                (element) => element.product._id.toString() === prodId
+            )
+            if (!product) throw productNotFoundInCart
+            return product
+        } catch (error) {
+            throw error
+        }
+    }
+
     async addProductInCart(cartId, prodId) {
         try {
             await productManager.getProductById(prodId) //Verifico la existencia del producto
@@ -52,6 +68,60 @@ class CartManager {
                     quantity: 1,
                 })
             }
+            await cartModel.updateOne({ _id: cartId }, cart)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async addProductsInCart(cartId, products) {
+        try {
+            products = products.map((product) => {
+                return {
+                    product: product._id.toString(),
+                    quantity: 1,
+                }
+            })
+            const cart = await this.getCartById(cartId)
+            cart.products = products
+            await cartModel.updateOne({ _id: cartId }, cart)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async deleteProductInCart(cartId, prodId) {
+        try {
+            const cart = await this.getCartById(cartId)
+            await this.getProductInCart(cartId, prodId) // Verifico si el producto esta en el carrito
+            const products = cart.products.filter(
+                (element) => element.product._id.toString() !== prodId
+            )
+            cart.products = products
+            await cartModel.updateOne({ _id: cartId }, cart)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async updateProductQuantity(cartId, prodId, newQuantity) {
+        try {
+            const cart = await this.getCartById(cartId)
+            await this.getProductInCart(cartId, prodId) // Verifico si el producto esta en el carrito
+            const product_object_index = cart.products.findIndex(
+                (element) => element.product._id.toString() === prodId
+            )
+            cart.products[product_object_index].quantity = newQuantity
+            await cartModel.updateOne({ _id: cartId }, cart)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async deleteAllProductsInCart(cartId) {
+        try {
+            const cart = await this.getCartById(cartId)
+            cart.products = []
             await cartModel.updateOne({ _id: cartId }, cart)
         } catch (error) {
             throw error

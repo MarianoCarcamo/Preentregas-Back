@@ -44,4 +44,58 @@ router.post('/', (req, res) => {
         })
 })
 
+router.delete('/:cartId/product/:productId', async (req, res) => {
+    try {
+        const { cartId, productId } = req.params
+        await cartManager.deleteProductInCart(cartId, productId)
+        res.json({
+            status: 'success',
+            message: 'Producto eliminado del carrito',
+        })
+    } catch (error) {
+        res.status(400).json({ ERROR: `${error.message}` })
+    }
+})
+
+router.put('/:cartId/product/:productId', async (req, res) => {
+    try {
+        const { cartId, productId } = req.params
+        const { quantity } = req.body
+        await cartManager.updateProductQuantity(cartId, productId, quantity)
+        res.json({
+            status: 'success',
+            message: 'Operacion realizada con exito!',
+        })
+    } catch (error) {
+        res.status(400).json({ ERROR: `${error.message}` })
+    }
+})
+
+router.delete('/:cartId', async (req, res) => {
+    try {
+        const { cartId } = req.params
+        await cartManager.deleteAllProductsInCart(cartId)
+        res.json({
+            status: 'success',
+            message: 'Operacion realizada con exito!',
+        })
+    } catch (error) {
+        res.status(400).json({ ERROR: `${error.message}` })
+    }
+})
+
+router.put('/:cartId', async (req, res) => {
+    try {
+        const { cartId } = req.params
+        const { payload } = req.body
+        await cartManager.addProductsInCart(cartId, payload)
+        res.json({
+            status: 'success',
+            message: 'Operacion realizada con exito!',
+        })
+    } catch (error) {
+        res.status(400).json({ ERROR: `${error.message}` })
+    }
+})
+
 export default router
