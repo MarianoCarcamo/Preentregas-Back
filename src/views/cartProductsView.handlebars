@@ -1,0 +1,13 @@
+<div class='container text-center'>
+    <h1 class='fw-bold fst-italic'>Productos en el carrito</h1>
+    <div class='row row-cols-3'>
+        {{#each result}}
+            <div class='m-3' style='width: 18rem;'>
+                <h5 class='fw-bold'>{{this.product.title}}</h5>
+                <p class='fw-semibold'>{{this.product.description}}</p>
+                <p class=''>Precio: ${{this.product.price}}</p>
+                <p class=''>Cantidad: {{this.quantity}}</p>
+            </div>
+        {{/each}}
+    </div>
+</div>

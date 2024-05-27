@@ -6,3 +6,6 @@ node_modules/*
 
 ### prettier ###
 .prettierrc.json
+
+### Variables de entorno ###
+.env
