@@ -1,8 +1,8 @@
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
 
 ### modules ###
-node_modules/*
+node_modules
 
 ### prettier ###
 .prettierrc.json

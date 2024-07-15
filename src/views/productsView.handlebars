@@ -1,34 +1,40 @@
-<div class='container text-center'>
-    <h1 class='fw-bold fst-italic'>Productos disponibles</h1>
-    <div class='row row-cols-3'>
-        {{#each payload}}
-            <div class='col card m-3' style='width: 18rem;'>
-                <img src='...' class='card-img-top' alt='...' />
-                <div class='card-body'>
-                    <h5 class='card-title fw-bold'>{{this.title}}</h5>
-                    <p class='card-text fw-semibold'>{{this.description}}</p>
-                    <p class='card-text'>Precio: ${{this.price}}</p>
-                    <p class='card-text'>Stock: {{this.stock}}</p>
+{{#if isAdmin}}
+     <div>
+        <h1>Bienvenido admin!!</h1>
+    </div>
+{{else}}
+    <div class='container text-center'>
+        <h1 class='fw-bold fst-italic'>{{user.first_name}}, bienvenido a la tienda!</h1>
+        <div class='row row-cols-3'>
+            {{#each response.payload}}
+                <div class='col card m-3' style='width: 18rem;'>
+                    <img src='...' class='card-img-top' alt='...' />
+                    <div class='card-body'>
+                        <h5 class='card-title fw-bold'>{{this.title}}</h5>
+                        <p class='card-text fw-semibold'>{{this.description}}</p>
+                        <p class='card-text'>Precio: ${{this.price}}</p>
+                        <p class='card-text'>Stock: {{this.stock}}</p>
+                    </div>
+                    <form action='/api/carts/{{../user.cart}}/product/{{this._id}}' method="post">
+                        <button type="submit" class="btn btn-primary mb-2">Agregar al Carrito</button>
+                    </form>
                 </div>
-                <form action="http://localhost:8080/api/carts/664f55c69806de5ee267976f/product/{{this._id}}" method="post" target="_blank">
-                    <button type="submit" class="btn btn-primary mb-2">Agregar al Carrito</button>
-                </form>
-            </div>
-        {{/each}}
+            {{/each}}
+        </div>
+        <div>
+            {{#if response.hasPrevPage}}
+                <a href={{response.prevLink}}>
+                    << Anterior
+                </a>
+            {{/if}}
+            &nbsp;
+            {{response.page}}
+            &nbsp;
+            {{#if response.hasNextPage}}
+                <a href={{response.nextLink}}>
+                    Siguiente >>
+                </a>
+            {{/if}}
+        </div>
     </div>
-    <div>
-        {{#if hasPrevPage}}
-            <a href={{prevLink}}>
-                << Anterior
-            </a>
-        {{/if}}
-        &nbsp;
-        {{this.page}}
-        &nbsp;
-        {{#if hasNextPage}}
-            <a href={{nextLink}}>
-                Siguiente >>
-            </a>
-        {{/if}}
-    </div>
-</div>
+{{/if}}

@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Titulo producto 1",
+    "description": "Descripcion producto 1",
+    "price": 1,
+    "stock": 1,
+    "code": "001",
+    "category": "Categoria producto 1",
+    "thumbnail": [
+      "/rutaA/prod1.img",
+      "/rutaB/prod1.img"
+    ],
+    "id": 1,
+    "status": true
+  },
+  {
+    "title": "Otro nuevo titulo para producto 2",
+    "description": "Descripcion producto 2",
+    "price": 2,
+    "stock": 2,
+    "code": "002",
+    "category": "Categoria producto 2",
+    "thumbnail": [
+      "/rutaA/prod2.img",
+      "/rutaB/prod2.img"
+    ],
+    "id": 2,
+    "status": false
+  },
+  {
+    "title": "Titulo producto 3",
+    "description": "Descripcion producto 3",
+    "price": 3,
+    "stock": 3,
+    "code": "003",
+    "category": "Categoria producto 3",
+    "thumbnail": [
+      "/rutaA/prod3.img",
+      "/rutaB/prod3.img"
+    ],
+    "id": 3,
+    "status": true
+  },
+  {
+    "title": "Titulo producto 5",
+    "description": "Descripcion producto 5",
+    "price": 5,
+    "stock": 5,
+    "code": "005",
+    "category": "Categoria producto 5",
+    "thumbnail": [
+      "/rutaA/prod5.img",
+      "/rutaB/prod5.img"
+    ],
+    "id": 5,
+    "status": true
+  },
+  {
+    "title": "Titulo producto 6",
+    "description": "Descripcion producto 6",
+    "price": 6,
+    "stock": 6,
+    "code": "006",
+    "category": "Categoria producto 6",
+    "thumbnail": [
+      "/rutaA/prod6.img",
+      "/rutaB/prod6.img"
+    ],
+    "id": 6,
+    "status": true
+  },
+  {
+    "title": "Titulo producto 7",
+    "description": "Descripcion producto 7",
+    "price": 7,
+    "stock": 7,
+    "code": "007",
+    "category": "Categoria producto 7",
+    "thumbnail": [
+      "/rutaA/prod7.img",
+      "/rutaB/prod7.img"
+    ],
+    "id": 7,
+    "status": true
+  }
+]
