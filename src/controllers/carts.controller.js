@@ -6,31 +6,45 @@ export async function getProductsInCart(req, res) {
     const id = req.params.cartId
     try {
         const products = await cartManager.getProductsInCart(id)
-        res.send(products)
+        res.send({ status: 'Success', payload: products })
     } catch (error) {
         res.status(404).json({
+            status: 'Error',
             ERROR: `${error.message}`,
         })
     }
 }
 
 export async function addProductInCart(req, res) {
-    const cartId = req.params.cartId
-    const prodId = req.params.productId
+    const { cartId, productId } = req.params
     try {
-        await cartManager.addProductInCart(cartId, prodId)
-        res.redirect(`/carts/${cartId}`)
+        const result = await cartManager.addProductInCart(cartId, productId)
+        if (result.status === 'Success') {
+            res.redirect(`/carts/${cartId}`)
+        } else {
+            throw error
+        }
     } catch (error) {
-        res.status(400).json({ ERROR: `${error.message}` })
+        res.status(404).json({
+            status: 'Error',
+            ERROR: `${error.message}`,
+        })
     }
 }
 
 export async function createCart(req, res) {
     try {
         const result = await cartManager.createCart()
-        res.json({ message: 'Carrito creado con exito', result })
+        res.json({
+            status: 'Success',
+            message: 'Carrito creado con exito',
+            result,
+        })
     } catch (error) {
-        res.status(400).json({ ERROR: `${error.message}` })
+        res.status(404).json({
+            status: 'Error',
+            ERROR: `${error.message}`,
+        })
     }
 }
 
@@ -39,11 +53,14 @@ export async function deleteProductInCart(req, res) {
     try {
         await cartManager.deleteProductInCart(cartId, productId)
         res.json({
-            status: 'success',
-            message: 'Producto eliminado del carrito',
+            status: 'Success',
+            message: 'Producto eliminado con exito del carrito',
         })
     } catch (error) {
-        res.status(400).json({ ERROR: `${error.message}` })
+        res.status(404).json({
+            status: 'Error',
+            ERROR: `${error.message}`,
+        })
     }
 }
 
@@ -53,11 +70,14 @@ export async function updateProductQuantity(req, res) {
     try {
         await cartManager.updateProductQuantity(cartId, productId, quantity)
         res.json({
-            status: 'success',
-            message: 'Operacion realizada con exito!',
+            status: 'Success',
+            message: 'Operacion realizada con exito',
         })
     } catch (error) {
-        res.status(400).json({ ERROR: `${error.message}` })
+        res.status(404).json({
+            status: 'Error',
+            ERROR: `${error.message}`,
+        })
     }
 }
 
@@ -66,11 +86,14 @@ export async function deleteAllProductsInCart(req, res) {
     try {
         await cartManager.deleteAllProductsInCart(cartId)
         res.json({
-            status: 'success',
-            message: 'Operacion realizada con exito!',
+            status: 'Success',
+            message: 'Productos eliminados del carrito correctamente',
         })
     } catch (error) {
-        res.status(400).json({ ERROR: `${error.message}` })
+        res.status(404).json({
+            status: 'Error',
+            ERROR: `${error.message}`,
+        })
     }
 }
 
@@ -80,11 +103,14 @@ export async function addProductsInCart(req, res) {
     try {
         await cartManager.addProductsInCart(cartId, payload)
         res.json({
-            status: 'success',
-            message: 'Operacion realizada con exito!',
+            status: 'Success',
+            message: 'Productos agregados al carrito correctamente',
         })
     } catch (error) {
-        res.status(400).json({ ERROR: `${error.message}` })
+        res.status(404).json({
+            status: 'Error',
+            ERROR: `${error.message}`,
+        })
     }
 }
 
@@ -97,10 +123,13 @@ export async function purchaser(req, res) {
         )
         await sendEmail(ticket)
         res.json({
-            status: 'success',
-            message: 'Operacion realizada con exito!',
+            status: 'Success',
+            message: 'Operacion realizada con exito',
         })
     } catch (error) {
-        res.status(400).json({ ERROR: `${error.message}` })
+        res.status(404).json({
+            status: 'Error',
+            ERROR: `${error.message}`,
+        })
     }
 }

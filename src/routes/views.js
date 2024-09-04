@@ -5,13 +5,21 @@ import { isAuthenticated, isNotAuthenticated } from '../middleware/auth.js'
 
 const router = Router()
 
+router.get('/', async (req, res) => {
+    try {
+        res.redirect('/login')
+    } catch (error) {
+        throw error
+    }
+})
+
 router.get('/products', async (req, res) => {
     try {
         if (!req.session.user) {
             return res.redirect('/login')
         }
         const response = await productManager.getProducts(req)
-        response.payload = response.payload.map((element) => element.toObject()) // Hago del payload objetos planos
+        response.payload = response.payload.map((element) => element.toObject())
         const result = {
             response: response,
             user: req.session.user,

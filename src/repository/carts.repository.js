@@ -22,8 +22,7 @@ async function getCartById(cartId) {
 //Funciones Externas
 export async function createCart() {
     try {
-        const result = await dataCarts.createCart()
-        return result
+        return await dataCarts.createCart()
     } catch (error) {
         throw error
     }
@@ -66,7 +65,8 @@ export async function addProductInCart(cartId, prodId) {
                 quantity: 1,
             })
         }
-        await dataCarts.updateCart(cartId, cart)
+        const result = await dataCarts.updateCart(cartId, cart)
+        return { status: 'Success', payload: result }
     } catch (error) {
         throw error
     }
@@ -82,7 +82,8 @@ export async function addProductsInCart(cartId, products) {
         })
         const cart = await getCartById(cartId)
         cart.products = products
-        await dataCarts.updateCart(cartId, cart)
+        const result = await dataCarts.updateCart(cartId, cart)
+        return { status: 'Success', payload: result }
     } catch (error) {
         throw error
     }
@@ -96,7 +97,8 @@ export async function deleteProductInCart(cartId, prodId) {
             (element) => element.product._id.toString() !== prodId
         )
         cart.products = products
-        await dataCarts.updateCart(cartId, cart)
+        const result = await dataCarts.updateCart(cartId, cart)
+        return { status: 'Success', payload: result }
     } catch (error) {
         throw error
     }
@@ -110,7 +112,8 @@ export async function updateProductQuantity(cartId, prodId, newQuantity) {
             (element) => element.product._id.toString() === prodId
         )
         cart.products[product_object_index].quantity = newQuantity
-        await dataCarts.updateCart(cartId, cart)
+        const result = await dataCarts.updateCart(cartId, cart)
+        return { status: 'Success', payload: result }
     } catch (error) {
         throw error
     }
@@ -120,7 +123,8 @@ export async function deleteAllProductsInCart(cartId) {
     try {
         const cart = await getCartById(cartId)
         cart.products = []
-        await dataCarts.updateCart(cartId, cart)
+        const result = await dataCarts.updateCart(cartId, cart)
+        return { status: 'Success', payload: result }
     } catch (error) {
         throw error
     }

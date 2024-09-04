@@ -11,7 +11,7 @@ El servidor está vinculado a la ip local "127.0.0.1" en el puerto "8080"
     -   limit: Limita el numero de productos a mostrar por pagina.
     -   sort: Ordena de forma ascendente o descendente con respecto al precio. Toma los valores de 'asc' o 'desc'
     -   page: Lista los porductos de la pagina indicada por la query
-    -   query: Toma el valor que se le aplica al filtro del paginado. Por ejemplo: "/"category/":/"hogar/"".
+    -   query: Toma el valor que se le aplica al filtro del paginado. Por ejemplo: "category":"hogar".
 
 -   Metodo POST: Agrega un producto a la base de datos definido como un objeto con los siguientes campos:
 

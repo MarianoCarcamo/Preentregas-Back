@@ -30,7 +30,9 @@ const initializePassport = () => {
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
-                    let user = await userService.findUserByEmail(profile._json.email)
+                    let user = await userService.findUserByEmail(
+                        profile._json.email
+                    )
                     if (!user) {
                         let newUser = {
                             first_name: profile._json.name,
@@ -63,7 +65,6 @@ const initializePassport = () => {
                 try {
                     let user = await userService.findUserByEmail(username)
                     if (user) {
-                        console.log('El usuario ya existe')
                         return done(null, false)
                     }
                     const newUser = {

@@ -11,8 +11,7 @@ export async function createTicket(cartId, email) {
             amount,
             purchaser: email,
         }
-        const result = await dataTickets.createTicket(purchase)
-        return result
+        return await dataTickets.createTicket(purchase)
     } catch (error) {
         throw error
     }

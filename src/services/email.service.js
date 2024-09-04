@@ -18,9 +18,13 @@ export async function sendEmail(ticket) {
         subject: 'Confirmacion de compra',
         html: `
         <div>
-            <h1>Gracias por su compra</h1>
+            <h1>${ticket.purchaser}! Gracias por tu compra!!</h1>
             <div>
                 <h2>Monto abonado: $${ticket.amount}</h2>
+            </div>
+            <div>
+                <p>Codigo: ${ticket.code}</p>
+                <p>Fecha de compra: ${ticket.purchase_datetime}</p>
             </div>
         </div>
         `,

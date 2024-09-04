@@ -20,13 +20,16 @@ export function getResponse(req, data) {
         hasPrevPage: data.hasPrevPage,
         hasNextPage: data.hasNextPage,
     }
+
+    const symbol = req.originalUrl.includes('?') ? '&' : '?'
+
     if (data.hasPrevPage) {
         const prevURL = req.originalUrl.includes('page=')
             ? req.originalUrl.replace(
                   `page=${data.page}`,
                   `page=${data.prevPage}`
               )
-            : `${req.originalUrl}&page=${data.prevPage}`
+            : `${req.originalUrl}${symbol}page=${data.prevPage}`
         response.prevLink = `${req.protocol}://${req.get('host')}${prevURL}`
     } else {
         response.prevLink = null
@@ -37,7 +40,7 @@ export function getResponse(req, data) {
                   `page=${data.page}`,
                   `page=${data.nextPage}`
               )
-            : `${req.originalUrl}&page=${data.nextPage}`
+            : `${req.originalUrl}${symbol}page=${data.nextPage}`
         response.nextLink = `${req.protocol}://${req.get('host')}${nextURL}`
     } else {
         response.nextLink = null

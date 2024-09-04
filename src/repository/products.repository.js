@@ -12,8 +12,12 @@ function updateByField(product, updatedProduct) {
 }
 
 async function isCodeDuplicate(code) {
-    const products = await dataProducts.getAllProducts()
-    return products.some((product) => product.code === code)
+    try {
+        const products = await dataProducts.getAllProducts()
+        return products.some((product) => product.code === code)
+    } catch (error) {
+        throw error
+    }
 }
 
 //Funciones Externas
@@ -78,7 +82,7 @@ export async function deleteProduct(id) {
 
 export async function updateProduct(id, product) {
     try {
-        if (product.id !== undefined) {
+        if ((product.id !== undefined) | (product._id !== undefined)) {
             throw new Error('No se permite actualizar el id')
         }
         const old_product = await dataProducts.getProductById(id)

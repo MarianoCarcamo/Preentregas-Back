@@ -15,7 +15,7 @@ export const isNotAuthenticated = (req, res, next) => {
 }
 
 export const isAdmin = (req, res, next) => {
-    if (req.session.user.rol === 'Admin') {
+    if (req.session.user.rol === 'admin') {
         return next()
     } else {
         res.send({ error: 'Acceso denegado' })
@@ -23,7 +23,7 @@ export const isAdmin = (req, res, next) => {
 }
 
 export const isNotAdmin = (req, res, next) => {
-    if (req.session.user.rol !== 'Admin') {
+    if (req.session.user.rol !== 'admin') {
         return next()
     } else {
         res.send({ error: 'Acceso denegado' })

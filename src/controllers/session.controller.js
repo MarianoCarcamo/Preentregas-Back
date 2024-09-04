@@ -10,15 +10,15 @@ export async function register(req, res) {
 }
 
 export async function failedRegister(req, res) {
-    console.log('Estrategia de registro fallida')
-    res.send({ error: 'FALLO' })
+    res.send({ status: 'Error', error: 'Fallo al registrar un nuevo usuario' })
 }
 
 export async function login(req, res) {
     if (!req.user)
-        return res
-            .status(400)
-            .send({ status: 'error', error: 'Datos incompletos' })
+        return res.status(400).send({
+            status: 'Error',
+            error: 'Los datos son incorrectos o los campos estan incompletos',
+        })
     try {
         req.session.user = {
             first_name: req.user.first_name,
@@ -29,13 +29,13 @@ export async function login(req, res) {
             cart: req.user.cart,
         }
         res.redirect('/products')
-    } catch (err) {
+    } catch (error) {
         res.status(500).send('Error al iniciar sesión')
     }
 }
 
 export async function failedLogin(req, res) {
-    res.send({ error: 'Login Failed' })
+    res.send({ status: 'Error', error: 'Login Failed' })
 }
 
 export async function logout(req, res) {
