@@ -19,6 +19,7 @@ const ticketSchema = new mongoose.Schema({
     },
     amount: { type: Number, required: true },
     purchaser: { type: String, required: true },
+    products: { type: [], required: true },
 })
 
 const firstCollection = mongoose.model(ticketCollection, ticketSchema)

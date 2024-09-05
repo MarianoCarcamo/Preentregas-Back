@@ -117,15 +117,38 @@ export async function addProductsInCart(req, res) {
 export async function purchaser(req, res) {
     const { cartId } = req.params
     try {
-        const ticket = await ticketManager.createTicket(
-            cartId,
-            req.session.user.email
-        )
-        await sendEmail(ticket)
-        res.json({
-            status: 'Success',
-            message: 'Operacion realizada con exito',
-        })
+        let ticket = {}
+
+        const { purchase_products, remain_products } =
+            await cartManager.getPurchasedProducts(cartId)
+
+        if (purchase_products.length > 0) {
+            ticket = await ticketManager.createTicket(
+                req.session.user.email,
+                purchase_products
+            )
+            await sendEmail(ticket)
+
+            if (remain_products.length == 0) {
+                res.json({
+                    status: 'Success',
+                    message: 'Operacion realizada con exito',
+                    not_bought_products: null,
+                })
+            } else {
+                res.json({
+                    status: 'Success',
+                    message: 'Se realizo una compra parcial',
+                    not_bought_products: remain_products.map((obj) => obj._id),
+                })
+            }
+        } else {
+            res.json({
+                status: 'Error',
+                message:
+                    'No se puede realizar la compra. Revise si hay stock disponible',
+            })
+        }
     } catch (error) {
         res.status(404).json({
             status: 'Error',

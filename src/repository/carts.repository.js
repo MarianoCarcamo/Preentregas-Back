@@ -129,3 +129,37 @@ export async function deleteAllProductsInCart(cartId) {
         throw error
     }
 }
+
+export async function getPurchasedProducts(cartId) {
+    try {
+        //Separo los que tienen stock de los que no
+        const cart = await getCartById(cartId)
+        const purchase_products = cart.products.filter(
+            (obj) => obj.product.stock >= obj.quantity
+        )
+        const remain_products = cart.products.filter(
+            (obj) => obj.product.stock < obj.quantity
+        )
+
+        //Actualizo en base de datos
+        cart.products = remain_products
+        const result = await dataCarts.updateCart(cartId, cart)
+
+        //Actualizo el stock de productos
+        purchase_products.forEach(async (obj) => {
+            const newStock = obj.product.stock - obj.quantity
+            await productManager.updateProduct(obj.product._id, {
+                stock: newStock,
+            })
+        })
+
+        return {
+            status: 'Success',
+            payload: result,
+            purchase_products,
+            remain_products,
+        }
+    } catch (error) {
+        throw error
+    }
+}

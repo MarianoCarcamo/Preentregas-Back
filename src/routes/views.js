@@ -1,7 +1,11 @@
 import { Router } from 'express'
 import * as productManager from '../repository/products.repository.js'
 import * as cartManager from '../repository/carts.repository.js'
-import { isAuthenticated, isNotAuthenticated } from '../middleware/auth.js'
+import {
+    isAuthenticated,
+    isNotAuthenticated,
+    isNotAdmin,
+} from '../middleware/auth.js'
 
 const router = Router()
 
@@ -54,7 +58,7 @@ router.get('/profile', isAuthenticated, (req, res) => {
     res.render('profileView', { user: req.session.user })
 })
 
-router.get('/chatroom', (req, res) => {
+router.get('/chatroom', isNotAdmin, (req, res) => {
     res.render('chatView', {})
 })
 

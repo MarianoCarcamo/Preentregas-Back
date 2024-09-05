@@ -1,13 +1,13 @@
 import * as dataTickets from '../dao/mongoDB/ticketsData.js'
-import { getProductsInCart } from '../repository/carts.repository.js'
 
 //Funciones Externas
-export async function createTicket(cartId, email) {
+export async function createTicket(email, products) {
     try {
-        const amount = (await getProductsInCart(cartId))
-            .map((prod) => prod.product.price * prod.quantity)
+        const amount = products
+            .map((obj) => obj.product.price * obj.quantity)
             .reduce((a, b) => a + b)
         let purchase = {
+            products,
             amount,
             purchaser: email,
         }
