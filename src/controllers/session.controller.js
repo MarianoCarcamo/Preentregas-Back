@@ -28,6 +28,7 @@ export async function login(req, res) {
         })
     try {
         req.session.user = {
+            _id: req.user._id,
             first_name: req.user.first_name,
             last_name: req.user.last_name,
             email: req.user.email,

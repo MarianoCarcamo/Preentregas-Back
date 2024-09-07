@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import rol from '../../config/userRols.js'
 
 const userCollection = 'Users'
 
@@ -8,7 +9,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, unique: true },
     age: Number,
     password: String,
-    rol: { type: String, default: 'user' },
+    rol: { type: String, default: rol.USER },
     cart: { type: mongoose.Schema.Types.ObjectId, ref: 'carts' },
 })
 

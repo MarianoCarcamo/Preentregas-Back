@@ -6,7 +6,7 @@ import * as userService from '../dao/mongoDB/userData.js'
 import { createHash, isValidPassword } from '../utils.js'
 
 const ADMIN = {
-    _id: 0,
+    _id: '0',
     first_name: 'Coder',
     last_name: 'House',
     age: 20,

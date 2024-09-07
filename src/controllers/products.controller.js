@@ -27,6 +27,7 @@ export async function getProductById(req, res) {
 
 export async function createProduct(req, res) {
     const newProduct = req.body
+    newProduct.owner = req.session.user._id
     try {
         const result = await productManager.createProduct(newProduct)
         res.send({ status: 'Success', payload: result })

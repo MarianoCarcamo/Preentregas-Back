@@ -11,6 +11,7 @@ import chatSocket from './services/chatSocket.service.js'
 import sessionRouter from './routes/api/session.router.js'
 import productsRouter from './routes/api/products.router.js'
 import cartsRouter from './routes/api/carts.router.js'
+import usersRouter from './routes/api/users.router.js'
 import viewsRouter from './routes/views.js'
 import initializePassport from './config/passport.config.js'
 
@@ -49,6 +50,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/api/sessions', sessionRouter)
+app.use('/api/users', usersRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/', viewsRouter)

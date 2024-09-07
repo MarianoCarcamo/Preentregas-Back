@@ -1,3 +1,5 @@
+import rol from '../config/userRols.js'
+
 export const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
         return next()
@@ -15,7 +17,7 @@ export const isNotAuthenticated = (req, res, next) => {
 }
 
 export const isAdmin = (req, res, next) => {
-    if (req.session.user.rol === 'admin') {
+    if (req.session.user.rol === rol.ADMIN) {
         return next()
     } else {
         res.send({ error: 'Acceso denegado' })
@@ -23,7 +25,39 @@ export const isAdmin = (req, res, next) => {
 }
 
 export const isNotAdmin = (req, res, next) => {
-    if (req.session.user.rol !== 'admin') {
+    if (req.session.user.rol !== rol.ADMIN) {
+        return next()
+    } else {
+        res.send({ error: 'Acceso denegado' })
+    }
+}
+
+export const isUser = (req, res, next) => {
+    if (req.session.user.rol === rol.USER) {
+        return next()
+    } else {
+        res.send({ error: 'Acceso denegado' })
+    }
+}
+
+export const isNotUser = (req, res, next) => {
+    if (req.session.user.rol !== rol.USER) {
+        return next()
+    } else {
+        res.send({ error: 'Acceso denegado' })
+    }
+}
+
+export const isPremium = (req, res, next) => {
+    if (req.session.user.rol === rol.PREMIUM) {
+        return next()
+    } else {
+        res.send({ error: 'Acceso denegado' })
+    }
+}
+
+export const isNotPremium = (req, res, next) => {
+    if (req.session.user.rol !== rol.PREMIUM) {
         return next()
     } else {
         res.send({ error: 'Acceso denegado' })

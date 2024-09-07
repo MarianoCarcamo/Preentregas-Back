@@ -1,6 +1,7 @@
 import express from 'express'
 import * as controller from '../../controllers/carts.controller.js'
 import { isNotAdmin } from '../../middleware/auth.js'
+import { isNotOwner } from '../../middleware/verifyProductOwner.js'
 
 const router = express.Router()
 
@@ -9,6 +10,7 @@ router.get('/:cartId', controller.getProductsInCart)
 router.post(
     '/:cartId/product/:productId',
     isNotAdmin,
+    isNotOwner,
     controller.addProductInCart
 )
 router.post('/', controller.createCart)
