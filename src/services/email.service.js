@@ -11,7 +11,7 @@ const transport = nodeMailer.createTransport({
     },
 })
 
-export async function sendEmail(ticket) {
+export async function sendTicket(ticket) {
     await transport.sendMail({
         from: config.email,
         to: ticket.purchaser,
@@ -27,6 +27,18 @@ export async function sendEmail(ticket) {
                 <p>Fecha de compra: ${ticket.purchase_datetime}</p>
             </div>
         </div>
+        `,
+        attachments: [],
+    })
+}
+
+export async function sendRecoveryLink(user, link) {
+    await transport.sendMail({
+        from: config.email,
+        to: user.email,
+        subject: 'Restablecimiento de contraseña',
+        html: `
+        <h3>Haga click <a href=${link}>aquí</a> para restablecer su contraseña</h3>
         `,
         attachments: [],
     })

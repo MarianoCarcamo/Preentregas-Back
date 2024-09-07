@@ -1,6 +1,6 @@
 import * as cartManager from '../repository/carts.repository.js'
 import * as ticketManager from '../repository/tickets.repository.js'
-import { sendEmail } from '../services/email.service.js'
+import { sendTicket } from '../services/email.service.js'
 
 export async function getProductsInCart(req, res) {
     const id = req.params.cartId
@@ -127,7 +127,7 @@ export async function purchaser(req, res) {
                 req.session.user.email,
                 purchase_products
             )
-            await sendEmail(ticket)
+            await sendTicket(ticket)
 
             if (remain_products.length == 0) {
                 res.json({

@@ -6,7 +6,7 @@ import {
     isNotAuthenticated,
     isNotAdmin,
 } from '../middleware/auth.js'
-
+import { authToken } from '../middleware/recoveryValidation.js'
 const router = Router()
 
 router.get('/', async (req, res) => {
@@ -60,6 +60,19 @@ router.get('/profile', isAuthenticated, (req, res) => {
 
 router.get('/chatroom', isNotAdmin, (req, res) => {
     res.render('chatView', {})
+})
+
+router.get('/recovery', async (req, res) => {
+    res.render('recoveryView', {})
+})
+
+router.get('/link-expired', async (req, res) => {
+    res.render('expiredView', {})
+})
+
+router.get('/recovery-password/:token', authToken, async (req, res) => {
+    const uid = req.user._id
+    res.render('passwordRecoveryView', { uid })
 })
 
 export default router

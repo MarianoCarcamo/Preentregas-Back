@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { isAuthenticated } from '../../middleware/auth.js'
 import passport from 'passport'
 import * as controller from '../../controllers/session.controller.js'
+import * as recoveryMiddleware from '../../middleware/recoveryValidation.js'
 
 const router = Router()
 
@@ -36,5 +37,16 @@ router.get(
     passport.authenticate('github', { failureRedirect: '/login' }),
     controller.githubcallback
 )
+
+router.post(
+    '/recovery',
+    recoveryMiddleware.recoveryValidation,
+    recoveryMiddleware.generateLink,
+    controller.recoveryEmail
+)
+
+router.get('/failrecovery', controller.failedPasswordRecovery)
+
+router.post('/recovery-password/:uid', controller.recoveryPassword)
 
 export default router

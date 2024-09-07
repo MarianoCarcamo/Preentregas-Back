@@ -1,4 +1,7 @@
 import { censoredUser } from '../dao/dtos/users.dto.js'
+import { sendRecoveryLink } from '../services/email.service.js'
+import { updatePassword, findUserById } from '../dao/mongoDB/userData.js'
+import { createHash, isValidPassword } from '../utils.js'
 
 export async function currentUser(req, res) {
     const user = censoredUser(req.session.user)
@@ -11,6 +14,10 @@ export async function register(req, res) {
 
 export async function failedRegister(req, res) {
     res.send({ status: 'Error', error: 'Fallo al registrar un nuevo usuario' })
+}
+
+export async function failedPasswordRecovery(req, res) {
+    res.send({ status: 'Error', error: 'Fallo al restablecer contraseña' })
 }
 
 export async function login(req, res) {
@@ -50,4 +57,40 @@ export async function github(req, res) {}
 export async function githubcallback(req, res) {
     req.session.user = req.user
     res.redirect('/products')
+}
+
+export async function recoveryEmail(req, res) {
+    const user = req.user
+    const recovery_link = req.recoveryLink
+    try {
+        sendRecoveryLink(user, recovery_link)
+        res.redirect('/login')
+    } catch (error) {
+        res.send({
+            status: 'ERROR',
+            message:
+                'Error al enviar el mail de reestablecimiento de contraseña',
+        })
+    }
+}
+
+export async function recoveryPassword(req, res) {
+    const { uid } = req.params
+    const { password } = req.body
+    try {
+        if (!isValidPassword(await findUserById(uid), password)) {
+            await updatePassword(uid, createHash(password))
+            res.redirect('/login')
+        } else {
+            res.send({
+                status: 'ERROR',
+                message: 'No puede utilizar la misma contraseña',
+            })
+        }
+    } catch (error) {
+        res.send({
+            status: 'ERROR',
+            message: 'Error al restablecer la contraseña',
+        })
+    }
 }
