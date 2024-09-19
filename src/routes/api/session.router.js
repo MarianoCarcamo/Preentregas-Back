@@ -3,6 +3,7 @@ import { isAuthenticated } from '../../middleware/auth.js'
 import passport from 'passport'
 import * as controller from '../../controllers/session.controller.js'
 import * as recoveryMiddleware from '../../middleware/recoveryValidation.js'
+import { lastConnection } from '../../middleware/lastConnection.js'
 
 const router = Router()
 
@@ -19,12 +20,13 @@ router.get('/failregister', controller.failedRegister)
 router.post(
     '/login',
     passport.authenticate('login', { failureRedirect: 'faillogin' }),
+    lastConnection,
     controller.login
 )
 
 router.get('/faillogin', controller.failedLogin)
 
-router.post('/logout', controller.logout)
+router.post('/logout', lastConnection, controller.logout)
 
 router.get(
     '/github',
@@ -35,6 +37,7 @@ router.get(
 router.get(
     '/githubcallback',
     passport.authenticate('github', { failureRedirect: '/login' }),
+    lastConnection,
     controller.githubcallback
 )
 

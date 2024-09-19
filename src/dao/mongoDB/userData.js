@@ -26,3 +26,20 @@ export async function toggleRol(id) {
     }
     return await userModel.findByIdAndUpdate(id, { rol: user.rol })
 }
+
+export async function updateLastConnection(user) {
+    return await userModel.findOneAndUpdate(
+        { email: user.email },
+        { last_connection: new Date() }
+    )
+}
+
+export async function updateDocs(id, docs) {
+    const user = await findUserById(id)
+    user.documents.push(...docs)
+    return await userModel.findByIdAndUpdate(
+        id,
+        { documents: user.documents },
+        { new: true }
+    )
+}

@@ -1,0 +1,12 @@
+<h1>Subir Archivos</h1>
+<h6>Debe cargar 3 comprobantes: </h6>
+<ul>
+    <li>Comprobante de identificación</li>
+    <li>Comprobante de domicilio</li>
+    <li>Comprobante de estado de cuenta</li>
+</ul>
+<form action="api/users/{{uid}}/documents" method="post" enctype="multipart/form-data">
+    <label for="docs">Selecciona los archivos</label>
+    <input type="file" id="docs" name="docs" multiple=true>
+    <button type="submit">Subir archivo</button>
+</form>

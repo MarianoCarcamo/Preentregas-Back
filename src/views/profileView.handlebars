@@ -1,8 +1,28 @@
 <h2>Perfil de Usuario</h2>
-<p>Nombre: {{user.first_name}}</p>
-<p>Apellido: {{user.last_name}}</p>
-<p>Email: {{user.email}}</p>
-<p>Edad: {{user.age}}</p>
-<form action="/api/sessions/logout" method="POST">
-    <button type="submit">Cerrar Sesión</button>
-</form>
+<div>
+    <p>Nombre: {{user.first_name}}</p>
+    <p>Apellido: {{user.last_name}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>Edad: {{user.age}}</p>
+    <p>Rol: {{user.rol}}</p>
+</div>
+<div>
+    {{#if premium}}
+        <form action='/api/users/premium/{{user._id}}' method='POST'>
+            <button type='submit'>Ser usuario regular</button>
+        </form>
+    {{else if completeDocs}}
+        <form action='/api/users/premium/{{user._id}}' method='POST'>
+            <button type='submit'>Ser usuario premium</button>
+        </form>
+    {{else}}
+        <form action='/upload-documents'>
+            <button type='submit'>Ser usuario premium</button>
+        </form>
+    {{/if}}
+</div>
+<div>
+    <form action='/api/sessions/logout' method='POST'>
+        <button type='submit'>Cerrar Sesión</button>
+    </form>
+</div>
