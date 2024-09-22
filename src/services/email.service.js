@@ -43,3 +43,15 @@ export async function sendRecoveryLink(user, link) {
         attachments: [],
     })
 }
+
+export async function sendDeleteConfirmation(user) {
+    await transport.sendMail({
+        from: config.email,
+        to: user.email,
+        subject: 'Eliminacion de Cuenta por inactividad',
+        html: `
+        <h3>Lamentamos informarle que su cuenta fue eliminada por permanecer inactiva</h3>
+        `,
+        attachments: [],
+    })
+}

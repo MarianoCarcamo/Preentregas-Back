@@ -1,5 +1,6 @@
 import userModel from '../models/user.model.js'
 import rol from '../../config/userRols.js'
+import { sendDeleteConfirmation } from '../../services/email.service.js'
 
 export async function createUser(user) {
     return await userModel.create(user)
@@ -42,4 +43,29 @@ export async function updateDocs(id, docs) {
         { documents: user.documents },
         { new: true }
     )
+}
+
+export async function getAllUsers() {
+    try {
+        return userModel.find()
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function deleteUsers(inactivityDays) {
+    const today = new Date()
+    const limit = new Date(today.setDate(today.getDate() - inactivityDays))
+
+    try {
+        const users = await userModel.find({ last_connection: { $lt: limit } })
+        const result = await userModel.deleteMany({
+            last_connection: { $lt: limit },
+        })
+        users.forEach(async (user) => {
+            await sendDeleteConfirmation(user)
+        })
+    } catch (error) {
+        console.error('Error al eliminar usuarios inactivos:', error)
+    }
 }

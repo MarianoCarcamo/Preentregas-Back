@@ -11,4 +11,5 @@ export default {
     clientSecret: process.env.CLIENT_SECRET,
     email: process.env.EMAIL,
     emailPassword: process.env.EMAIL_PASSWORD,
+    inactivity: process.env.INACTIVITY_TIME,
 }

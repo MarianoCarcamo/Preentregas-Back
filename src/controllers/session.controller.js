@@ -35,6 +35,7 @@ export async function login(req, res) {
             age: req.user.age,
             rol: req.user.rol,
             cart: req.user.cart,
+            documents: req.user.documents,
         }
         res.redirect('/products')
     } catch (error) {
