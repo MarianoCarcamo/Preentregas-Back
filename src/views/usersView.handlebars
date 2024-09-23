@@ -1,0 +1,17 @@
+<div>
+    {{#each users}}
+        <div class='bg-secondary text-white m-3 p-2'>
+            <p>Nombre: {{this.first_name}}</p>
+            <p>Apellido: {{this.last_name}}</p>
+            <p>Email: {{this.email}}</p>
+            <p>Edad: {{this.age}}</p>
+            <p>Rol: {{this.rol}}</p>
+            <form action='/api/users/premium/{{this._id}}' method='POST'>
+                <button type='submit'>Cambiar rol</button>
+            </form>
+            <form action='/api/users/{{this._id}}' method='POST'>
+                <button type='submit'>Eliminar Usuario</button>
+            </form>
+        </div>
+    {{/each}}
+</div>

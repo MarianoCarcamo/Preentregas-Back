@@ -13,6 +13,7 @@ const ADMIN = {
     email: 'adminCoder@coder.com',
     password: 'adminCod3r123',
     rol: 'admin',
+    documents: [],
 }
 
 const localStrategy = local.Strategy

@@ -8,7 +8,7 @@ const router = Router()
 
 router.get('/', controller.getAllUsers)
 
-router.put('/premium/:uid', isNotAdmin, controller.changeRol)
+router.post('/premium/:uid', controller.changeRol)
 
 router.post(
     '/:uid/documents',
@@ -16,6 +16,8 @@ router.post(
     loadDocs,
     controller.changeRol
 )
+
+router.post('/:uid', controller.deleteUser)
 
 router.delete('/', controller.deleteUsers)
 

@@ -5,8 +5,10 @@ import {
     isAuthenticated,
     isNotAuthenticated,
     isNotAdmin,
+    isAdmin,
 } from '../middleware/auth.js'
 import { authToken } from '../middleware/recoveryValidation.js'
+import * as usersManager from '../dao/mongoDB/userData.js'
 
 const router = Router()
 
@@ -82,6 +84,12 @@ router.get('/recovery-password/:token', authToken, async (req, res) => {
 router.get('/upload-documents', async (req, res) => {
     const uid = req.session.user._id
     res.render('uploadDocumentsView', { uid })
+})
+
+router.get('/users', isAdmin, async (req, res) => {
+    let users = await usersManager.getAllUsers()
+    users = users.map((element) => element.toObject())
+    res.render('usersView', { users })
 })
 
 export default router

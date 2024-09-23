@@ -66,6 +66,15 @@ export async function deleteUsers(inactivityDays) {
             await sendDeleteConfirmation(user)
         })
     } catch (error) {
-        console.error('Error al eliminar usuarios inactivos:', error)
+        throw error
+    }
+}
+
+export async function deleteUser(uid) {
+    try {
+        const result = await userModel.findByIdAndDelete(uid)
+        return result
+    } catch (error) {
+        throw error
     }
 }
