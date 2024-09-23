@@ -27,7 +27,7 @@ const initializePassport = () => {
                 clientID: config.clientId,
                 clientSecret: config.clientSecret,
                 callbackURL:
-                    'http://preentregas-back-production.up.railway.app/api/sessions/githubcallback',
+                    'https://preentregas-back-production.up.railway.app/api/sessions/githubcallback',
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
@@ -40,7 +40,7 @@ const initializePassport = () => {
                             email: profile._json.email,
                         }
                         await fetch(
-                            'http://preentregas-back-production.up.railway.app/api/carts',
+                            'https://preentregas-back-production.up.railway.app/api/carts',
                             {
                                 method: 'POST',
                             }
@@ -79,7 +79,7 @@ const initializePassport = () => {
                         password: createHash(password),
                     }
                     await fetch(
-                        'http://preentregas-back-production.up.railway.app/api/carts',
+                        'https://preentregas-back-production.up.railway.app/api/carts',
                         {
                             method: 'POST',
                         }
