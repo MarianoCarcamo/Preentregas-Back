@@ -27,7 +27,7 @@ const initializePassport = () => {
                 clientID: config.clientId,
                 clientSecret: config.clientSecret,
                 callbackURL:
-                    'http://localhost:8080/api/sessions/githubcallback',
+                    'http://preentregas-back-production.up.railway.app/api/sessions/githubcallback',
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
@@ -39,9 +39,12 @@ const initializePassport = () => {
                             first_name: profile._json.name,
                             email: profile._json.email,
                         }
-                        await fetch('http://localhost:8080/api/carts', {
-                            method: 'POST',
-                        })
+                        await fetch(
+                            'http://preentregas-back-production.up.railway.app/api/carts',
+                            {
+                                method: 'POST',
+                            }
+                        )
                             .then((res) => res.json())
                             .then((data) => (newUser.cart = data.result._id))
                         let result = await userService.createUser(newUser)
@@ -75,9 +78,12 @@ const initializePassport = () => {
                         age,
                         password: createHash(password),
                     }
-                    await fetch('http://localhost:8080/api/carts', {
-                        method: 'POST',
-                    })
+                    await fetch(
+                        'http://preentregas-back-production.up.railway.app/api/carts',
+                        {
+                            method: 'POST',
+                        }
+                    )
                         .then((res) => res.json())
                         .then((data) => (newUser.cart = data.result._id))
                     let result = await userService.createUser(newUser)
