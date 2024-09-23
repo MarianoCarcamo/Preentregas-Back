@@ -15,7 +15,7 @@ import usersRouter from './routes/api/users.router.js'
 import viewsRouter from './routes/views.js'
 import initializePassport from './config/passport.config.js'
 
-const PORT = config.port
+const PORT = config.port || 8080
 const app = express()
 const httpServer = app.listen(PORT, () => {
     console.log(`Server's up and running on port ${PORT}`)
