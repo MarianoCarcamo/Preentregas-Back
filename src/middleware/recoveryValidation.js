@@ -29,7 +29,7 @@ export async function recoveryValidation(req, res, next) {
 export function generateLink(req, res, next) {
     const user = req.user
     const token = jwt.sign({ user }, config.JWTsecret, { expiresIn: '1h' })
-    const link = `http://localhost:${config.port}/recovery-password/${token}`
+    const link = `https://preentregas-back-production.up.railway.app//recovery-password/${token}`
     req.recoveryLink = link
     next()
 }
