@@ -67,6 +67,7 @@ const initializePassport = () => {
             async (req, username, password, done) => {
                 const { first_name, last_name, email, age } = req.body
                 try {
+                    console.log(username)
                     let user = await userService.findUserByEmail(username)
                     if (user) {
                         return done(null, false)
@@ -78,6 +79,7 @@ const initializePassport = () => {
                         age,
                         password: createHash(password),
                     }
+                    console.log(newUser)
                     await fetch(
                         'http://preentregas-back-production.up.railway.app/api/carts',
                         {
@@ -87,9 +89,10 @@ const initializePassport = () => {
                         .then((res) => res.json())
                         .then((data) => (newUser.cart = data.result._id))
                     let result = await userService.createUser(newUser)
+                    console.log(result)
                     return done(null, result)
                 } catch (error) {
-                    return done('Error al obtener el usuario' + error)
+                    return done('Error al registrar el usuario' + error)
                 }
             }
         )
