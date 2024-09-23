@@ -64,7 +64,7 @@ router.get('/profile', isAuthenticated, (req, res) => {
     res.render('profileView', { user, premium, completeDocs })
 })
 
-router.get('/chatroom', isNotAdmin, (req, res) => {
+router.get('/chatroom', isAuthenticated, isNotAdmin, (req, res) => {
     res.render('chatView', {})
 })
 
