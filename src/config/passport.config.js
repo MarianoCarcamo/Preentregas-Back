@@ -87,7 +87,6 @@ const initializePassport = () => {
                         .then((res) => res.json())
                         .then((data) => (newUser.cart = data.result._id))
                     let result = await userService.createUser(newUser)
-                    console.log(result)
                     return done(null, result)
                 } catch (error) {
                     return done('Error al registrar el usuario' + error)
