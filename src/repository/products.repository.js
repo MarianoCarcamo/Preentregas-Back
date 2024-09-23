@@ -1,5 +1,7 @@
 import * as dataProducts from '../dao/mongoDB/productsData.js'
+import { findUserById } from '../dao/mongoDB/userData.js'
 import { isProductValid, getResponse } from '../dao/dtos/products.dto.js'
+import { sendDeleteProductConfirmation } from '../services/email.service.js'
 
 const productNotFound = new Error('Producto no encontrado')
 
@@ -72,6 +74,12 @@ export async function getProductById(id) {
 export async function deleteProduct(id) {
     try {
         const product = await dataProducts.deleteProduct(id)
+        if (product.owner !== '0') {
+            await sendDeleteProductConfirmation(
+                await findUserById(product.owner),
+                product
+            )
+        }
         if (!product) {
             throw productNotFound
         }

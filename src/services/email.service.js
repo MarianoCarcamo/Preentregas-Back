@@ -23,7 +23,7 @@ export async function sendTicket(ticket) {
                 <h2>Monto abonado: $${ticket.amount}</h2>
             </div>
             <div>
-                <p>Codigo: ${ticket.code}</p>
+                <p>Codigo de compra: ${ticket.code}</p>
                 <p>Fecha de compra: ${ticket.purchase_datetime}</p>
             </div>
         </div>
@@ -51,6 +51,36 @@ export async function sendDeleteConfirmation(user) {
         subject: 'Eliminacion de Cuenta por inactividad',
         html: `
         <h3>Lamentamos informarle que su cuenta fue eliminada por permanecer inactiva</h3>
+        `,
+        attachments: [],
+    })
+}
+
+export async function sendAdminDeleteConfirmation(user) {
+    await transport.sendMail({
+        from: config.email,
+        to: user.email,
+        subject: 'Su cuenta fue eliminada por el admin',
+        html: `
+        <h3>Lamentamos informarle que su cuenta fue eliminada por el administrador de la tienda</h3>
+        `,
+        attachments: [],
+    })
+}
+
+export async function sendDeleteProductConfirmation(user, product) {
+    await transport.sendMail({
+        from: config.email,
+        to: user.email,
+        subject: 'Su producto fue eliminado de la tienda',
+        html: `
+        <h3>El siguiente producto ha sido eliminado de la tienda</h3>
+        <div>
+            <p>ID:${product._id}</p>
+            <p>CODE:${product.code}</p>
+            <p>TITLE:${product.title}</p>
+            <p>DESCRIPTION:${product.description}</p>
+        </div>
         `,
         attachments: [],
     })

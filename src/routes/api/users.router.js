@@ -17,8 +17,8 @@ router.post(
     controller.changeRol
 )
 
-router.post('/:uid', controller.deleteUser)
+router.post('/:uid', isAdmin, controller.deleteUser)
 
-router.delete('/', controller.deleteUsers)
+router.delete('/', isAdmin, controller.deleteUsers)
 
 export default router

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { randomUUID } from 'crypto'
 
 const ticketCollection = 'tickets'
 
@@ -7,7 +6,6 @@ const ticketSchema = new mongoose.Schema({
     code: {
         type: String,
         required: true,
-        default: randomUUID(),
         unique: true,
     },
     purchase_datetime: {

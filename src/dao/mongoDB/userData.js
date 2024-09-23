@@ -1,6 +1,9 @@
 import userModel from '../models/user.model.js'
 import rol from '../../config/userRols.js'
-import { sendDeleteConfirmation } from '../../services/email.service.js'
+import {
+    sendDeleteConfirmation,
+    sendAdminDeleteConfirmation,
+} from '../../services/email.service.js'
 
 export async function createUser(user) {
     return await userModel.create(user)
@@ -56,7 +59,6 @@ export async function getAllUsers() {
 export async function deleteUsers(inactivityDays) {
     const today = new Date()
     const limit = new Date(today.setDate(today.getDate() - inactivityDays))
-
     try {
         const users = await userModel.find({ last_connection: { $lt: limit } })
         const result = await userModel.deleteMany({
@@ -73,6 +75,7 @@ export async function deleteUsers(inactivityDays) {
 export async function deleteUser(uid) {
     try {
         const result = await userModel.findByIdAndDelete(uid)
+        await sendAdminDeleteConfirmation(user)
         return result
     } catch (error) {
         throw error
